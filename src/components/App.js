@@ -1,9 +1,4 @@
 import { Component } from 'react';
-// import Counter from './Counter/Counter';
-// import Dropdown from './Dropdown/Dropdown';
-// import ColorPicker from './Colorpicker/ColorPicker';
-// import TodoList from './Todolist/TodoList';
-// import initialTodos from '../todos.json';
 import {
   GoodButton,
   NeutralButton,
@@ -17,6 +12,84 @@ import {
   Title,
   ButtonsContainer,
 } from './Feedback/Feedback.styled';
+
+class App extends Component {
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  onIncrementGood = () => {
+    this.setState(prevState => ({
+      good: prevState.good + 1,
+    }));
+  };
+  onIncrementNeutral = () => {
+    this.setState(prevState => ({
+      neutral: prevState.neutral + 1,
+    }));
+  };
+  onIncrementBad = () => {
+    this.setState(prevState => ({
+      bad: prevState.bad + 1,
+    }));
+  };
+
+  countTotalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    const { good, neutral, bad } = this.state;
+    const totalFeedback = good + neutral + bad;
+
+    if (totalFeedback === 0) {
+      return 0;
+    }
+
+    return Math.round((good / totalFeedback) * 100);
+  };
+
+  render() {
+    const totalFeedback = this.countTotalFeedback();
+    return (
+      <div>
+        <FeedbackContainer>
+          <Title>Please leave feedback</Title>
+          <ButtonsContainer>
+            <GoodButton onIncrement={this.onIncrementGood} />
+            <NeutralButton onIncrement={this.onIncrementNeutral} />
+            <BadButton onIncrement={this.onIncrementBad} />
+          </ButtonsContainer>
+          {totalFeedback === 0 ? (
+            <Notification message="There is no feedback" />
+          ) : (
+            <Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          )}
+        </FeedbackContainer>
+        {/* <div>
+          <Phonebook onSubmit={this.formSubmitHandler} />
+        </div> */}
+      </div>
+    );
+  }
+}
+
+export default App;
+
+// import Counter from './Counter/Counter';
+// import Dropdown from './Dropdown/Dropdown';
+// import ColorPicker from './Colorpicker/ColorPicker';
+// import TodoList from './Todolist/TodoList';
+// import initialTodos from '../todos.json';
 
 // const colorPickerOptoins = [
 //   { label: 'red', color: 'red' },
@@ -63,79 +136,3 @@ import {
 // }
 
 // export default App2;
-
-class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
-
-  onIncrementGood = () => {
-    this.setState(prevState => ({
-      good: prevState.good + 1,
-    }));
-  };
-  onIncrementNeutral = () => {
-    this.setState(prevState => ({
-      neutral: prevState.neutral + 1,
-    }));
-  };
-  onIncrementBad = () => {
-    this.setState(prevState => ({
-      bad: prevState.bad + 1,
-    }));
-  };
-
-  countTotalFeedback = () => {
-    const { good, neutral, bad } = this.state;
-    return good + neutral + bad;
-  };
-
-  countPositiveFeedbackPercentage = () => {
-    const { good, neutral, bad } = this.state;
-    const totalFeedback = good + neutral + bad;
-
-    if (totalFeedback === 0) {
-      return 0;
-    }
-
-    return Math.round((good / totalFeedback) * 100);
-  };
-
-  formSubmitHandler = data => {
-    console.log(data);
-  };
-
-  render() {
-    const totalFeedback = this.countTotalFeedback();
-    return (
-      <div>
-        <FeedbackContainer>
-          <Title>Please leave feedback</Title>
-          <ButtonsContainer>
-            <GoodButton onIncrement={this.onIncrementGood} />
-            <NeutralButton onIncrement={this.onIncrementNeutral} />
-            <BadButton onIncrement={this.onIncrementBad} />
-          </ButtonsContainer>
-          {totalFeedback === 0 ? (
-            <Notification message="There is no feedback" />
-          ) : (
-            <Statistics
-              good={this.state.good}
-              neutral={this.state.neutral}
-              bad={this.state.bad}
-              total={this.countTotalFeedback()}
-              positivePercentage={this.countPositiveFeedbackPercentage()}
-            />
-          )}
-        </FeedbackContainer>
-        <div>
-          <Phonebook onSubmit={this.formSubmitHandler} />
-        </div>
-      </div>
-    );
-  }
-}
-
-export default App;
