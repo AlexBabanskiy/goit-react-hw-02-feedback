@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 const Statistics = ({ good, neutral, bad, total, positivePercentage }) => (
   <div>
@@ -12,3 +12,11 @@ const Statistics = ({ good, neutral, bad, total, positivePercentage }) => (
 );
 
 export default Statistics;
+
+StaticRange.PropTypes = {
+  good: PropTypes.object,
+  neutral: PropTypes.object,
+  bad: PropTypes.object,
+  total: PropTypes.func,
+  positivePercentage: PropTypes.func,
+};
