@@ -6,7 +6,7 @@ import {
 } from './Feedback/ControlButtons';
 import Statistics from './Feedback/Statistics';
 import Notification from './Feedback/Notification';
-import Phonebook from './Phonebook/Phonebook';
+
 import {
   FeedbackContainer,
   Title,
@@ -90,6 +90,7 @@ export default App;
 // import ColorPicker from './Colorpicker/ColorPicker';
 // import TodoList from './Todolist/TodoList';
 // import initialTodos from '../todos.json';
+// import Phonebook from './Phonebook/Phonebook';
 
 // const colorPickerOptoins = [
 //   { label: 'red', color: 'red' },
